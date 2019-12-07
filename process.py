@@ -7,7 +7,7 @@ from scipy import ndimage
 from PIL import Image
 
 def main():
-    image_path = 'images/test07.jpg'
+    image_path = 'images/test06.jpg'
     save_path = 'output_images/output' + image_path[-6:-4] + '.png'
     image = cv2.imread(image_path, flags=cv2.IMREAD_GRAYSCALE)
     height, width = image.shape
@@ -21,9 +21,9 @@ def main():
     cc = ndimage.find_objects(labeled_image)
     print('There are {} connected components.'.format(cc_num))
     cc_areas = ndimage.sum(image, labeled_image, range(cc_num + 1))
-    area_mask = cc_areas < 40000
+    area_mask = cc_areas < 90000
     labeled_image[area_mask[labeled_image]] = 0
-    labeled_image = cv2.bitwise_not(labeled_image)
+    labeled_image = np.where(labeled_image == 0, 255, 0)
     plt.imsave(save_path, labeled_image, cmap='binary')
     print('Image is saved to: {}'.format(save_path))
 
