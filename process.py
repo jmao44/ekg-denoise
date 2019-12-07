@@ -23,6 +23,7 @@ def main():
     cc_areas = ndimage.sum(image, labeled_image, range(cc_num + 1))
     area_mask = cc_areas < 40000
     labeled_image[area_mask[labeled_image]] = 0
+    labeled_image = cv2.bitwise_not(labeled_image)
     plt.imsave(save_path, labeled_image, cmap='binary')
     print('Image is saved to: {}'.format(save_path))
 
